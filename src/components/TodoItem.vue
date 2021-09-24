@@ -94,7 +94,7 @@ export default {
   background-color: #fff;
   font-size: 14px;
 }
-.todo-item.finish {
+.todo-item.finish .todo-content {
   text-decoration: line-through;
 }
 

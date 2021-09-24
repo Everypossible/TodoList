@@ -1,53 +1,29 @@
 <template>
-  <div class="root">
-    <!-- 引入font-awesome字体图标 -->
-    <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
-    <div id="app">
-      <div class="container">
-        <!-- 项目标题 -->
-        <!-- <TodoHeader :addItem="addItem"/> -->
-        <TodoHeader v-on:addItem="addItem"/>
-
-        <!-- 待办列表 -->
-        <!-- <TodoList :todoList="todoList"/> -->
-        <router-view :todoList="todoList"></router-view>
-        <TodoFooter :todoList="todoList"/>
-      </div>
-    </div>
+  <div>
+    <!-- 待办列表 -->
+    <ul class="todo-list" v-if="todoList.length > 0">
+      <TodoItem v-for="item,index in todoList" :key="index" :item="item" :index="index"/>
+    </ul>
+    <div v-else class="no-todo-list">no Data</div>
   </div>
 </template>
 
 <script>
-// import HelloWorld from './components/HelloWorld.vue'
-import pubsub from 'pubsub-js'
-import TodoHeader from "./components/TodoHeader";
-// import TodoList from "./components/TodoList";
-import TodoFooter from "./components/TodoFooter";
+import TodoItem from "./TodoItem";
 
 export default {
-  name: "App",
+  name: "TodoList",
   components: {
-    TodoHeader,
-    // TodoList,
-    TodoFooter,
+    TodoItem,
   },
-  data() {
-    return {
-      todoList: [],
-    }
-  },
-  created() {
-    this.todoList = JSON.parse(localStorage.getItem("todoList")) || [];
-  },
-  methods: {
-    addItem(todoItem) {
-      this.todoList.unshift(todoItem);
-      // console.log(todoItem);
-    },
-    deleteTodoItem(_, index) {
-      this.todoList.splice(index, 1);
-    },
-  },
+  props: ['todoList'],
+  // data() {
+  //   return {
+  //     todoList: [],
+  //     newTodo: "",
+  //     finishTotal: 0,
+  //   };
+  // },
   // computed: {
   //   finishTodoLength() {
   //     return this.todoList.filter((item) => item.isFinish).length;
@@ -61,9 +37,9 @@ export default {
   //   finishTodoItem(item) {
   //     item.isFinish = true;
   //   },
-    // deleteTodoItem(_, index) {
-    //   this.todoList.splice(index, 1);
-    // },
+  //   deleteTodoItem(index) {
+  //     this.todoList.splice(index, 1);
+  //   },
   //   addTodoItem() {
   //     if (!this.newTodo.trim()) {
   //       alert("todo 不能为空");
@@ -78,26 +54,18 @@ export default {
   //     this.newTodo = "";
   //   },
   // },
-  mounted() {
-    this.pubId = pubsub.subscribe("deleteTodoItem", this.deleteTodoItem);
-  },
-
-  beforeDestroy() {
-    pubsub.unsubscribe(this.pubId);
-  },
-
-  watch: {
-    todoList: {
-      deep: true,
-      handler: function (to) {
-        localStorage.setItem("todoList", JSON.stringify(to));
-      },
-    },
-  },
+  // watch: {
+  //   todoList: {
+  //     deep: true,
+  //     handler: function (to) {
+  //       localStorage.setItem("todoList", JSON.stringify(to));
+  //     },
+  //   },
+  // },
 };
 </script>
 
-<style>
+<style scoped>
 * {
   margin: 0;
   padding: 0;
@@ -111,10 +79,8 @@ body {
   background: linear-gradient(135deg, #eebd89, #d13abd);
 }
 .container {
-  /* margin: 100px 0 0 100px; */
-  margin: auto;
-  margin-top: 100px;
-  width: 500px;
+  margin: 100px 0 0 100px;
+  width: 300px;
   padding: 0 30px;
   border: 1px solid #eee;
   border-radius: 4px;
@@ -122,16 +88,16 @@ body {
   box-shadow: 6px 2px 5px rgba(0, 0, 0, 0.2);
 }
 
-/* .todo-list-title {
+.todo-list-title {
   color: #333;
   text-shadow: 4px 2px 2px rgba(0, 0, 0, 0.2);
   text-align: center;
-} */
+}
 
 ul {
   list-style: none;
 }
-/* .todo-list {
+.todo-list {
   margin-top: 10px;
 }
 .todo-list .todo-item {
@@ -179,5 +145,5 @@ ul {
   color: #fff;
   background: #1989fa;
   cursor: pointer;
-} */
+}
 </style>

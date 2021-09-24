@@ -5,11 +5,9 @@
     <div id="app">
       <div class="container">
         <!-- 项目标题 -->
-        <!-- <TodoHeader :addItem="addItem"/> -->
         <TodoHeader v-on:addItem="addItem"/>
 
         <!-- 待办列表 -->
-        <!-- <TodoList :todoList="todoList"/> -->
         <router-view :todoList="todoList"></router-view>
         <TodoFooter :todoList="todoList"/>
       </div>
@@ -18,17 +16,14 @@
 </template>
 
 <script>
-// import HelloWorld from './components/HelloWorld.vue'
 import pubsub from 'pubsub-js'
 import TodoHeader from "./components/TodoHeader";
-// import TodoList from "./components/TodoList";
 import TodoFooter from "./components/TodoFooter";
 
 export default {
   name: "App",
   components: {
     TodoHeader,
-    // TodoList,
     TodoFooter,
   },
   data() {
@@ -42,42 +37,12 @@ export default {
   methods: {
     addItem(todoItem) {
       this.todoList.unshift(todoItem);
-      // console.log(todoItem);
     },
     deleteTodoItem(_, index) {
       this.todoList.splice(index, 1);
     },
   },
-  // computed: {
-  //   finishTodoLength() {
-  //     return this.todoList.filter((item) => item.isFinish).length;
-  //   },
-  // },
-  // created() {
-  //   this.todoList = JSON.parse(localStorage.getItem("todoList")) || [];
-  // },
 
-  // methods: {
-  //   finishTodoItem(item) {
-  //     item.isFinish = true;
-  //   },
-    // deleteTodoItem(_, index) {
-    //   this.todoList.splice(index, 1);
-    // },
-  //   addTodoItem() {
-  //     if (!this.newTodo.trim()) {
-  //       alert("todo 不能为空");
-  //       return;
-  //     }
-
-  //     this.todoList.push({
-  //       name: this.newTodo,
-  //       isFinish: false,
-  //     });
-
-  //     this.newTodo = "";
-  //   },
-  // },
   mounted() {
     this.pubId = pubsub.subscribe("deleteTodoItem", this.deleteTodoItem);
   },
@@ -122,62 +87,7 @@ body {
   box-shadow: 6px 2px 5px rgba(0, 0, 0, 0.2);
 }
 
-/* .todo-list-title {
-  color: #333;
-  text-shadow: 4px 2px 2px rgba(0, 0, 0, 0.2);
-  text-align: center;
-} */
-
 ul {
   list-style: none;
 }
-/* .todo-list {
-  margin-top: 10px;
-}
-.todo-list .todo-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-  padding: 0 10px;
-  line-height: 36px;
-  border-radius: 4px;
-  background-color: #fff;
-  font-size: 14px;
-}
-.no-todo-List {
-  margin-top: 40px;
-  text-align: center;
-  color: #999;
-  font-size: 14px;
-}
-.todo-item.finish {
-  text-decoration: line-through;
-}
-
-.add-todo-container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin: 14px 0;
-}
-
-.add-todo-container input {
-  flex: 1;
-  margin-left: 10px;
-  margin-right: 12px;
-  line-height: 32px;
-  border: none;
-  outline: none;
-  border-radius: 4px;
-}
-.add-todo-container .add-btn {
-  display: inline-block;
-  padding: 0 18px;
-  border-radius: 4px;
-  line-height: 32px;
-  color: #fff;
-  background: #1989fa;
-  cursor: pointer;
-} */
 </style>

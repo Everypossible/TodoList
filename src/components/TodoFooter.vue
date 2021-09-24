@@ -14,65 +14,22 @@
 export default {
   name: "TodoFooter",
   props: ['todoList'],
-  // data() {
-  //   return {
-  //     title: "TODO LIST",
-  //     todoList: [],
-  //     newTodo: "",
-  //     finishTotal: 0,
-  //   };
-  // },
   computed: {
     finishTodoLength() {
-      // return this.todoList.filter((item) => item.isFinish).length;
       return this.todoList.filter((item) => !item.isFinish).length;
     },
   },
-  // created() {
-  //   this.todoList = JSON.parse(localStorage.getItem("todoList")) || [];
-  // },
 
   methods: {
     clearCompleted() {
-      // console.log(this.todoList.length);
       for(let i = 0; i < this.todoList.length; i++) {
         if(this.todoList[i].isFinish) {
-      //     // console.log(i);
           this.todoList.splice(i, 1);
           i = 0;
         }
       }
     }
   },
-  // methods: {
-  //   finishTodoItem(item) {
-  //     item.isFinish = true;
-  //   },
-  //   deleteTodoItem(index) {
-  //     this.todoList.splice(index, 1);
-  //   },
-  //   addTodoItem() {
-  //     if (!this.newTodo.trim()) {
-  //       alert("todo 不能为空");
-  //       return;
-  //     }
-
-  //     this.todoList.push({
-  //       name: this.newTodo,
-  //       isFinish: false,
-  //     });
-
-  //     this.newTodo = "";
-  //   },
-  // },
-  // watch: {
-  //   todoList: {
-  //     deep: true,
-  //     handler: function (to) {
-  //       localStorage.setItem("todoList", JSON.stringify(to));
-  //     },
-  //   },
-  // },
 };
 </script>
 

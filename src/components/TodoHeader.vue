@@ -26,6 +26,7 @@ export default {
   props: ['addItem'],
   methods: {
     addTodoItem() {
+      //对输入进行输入为空和空格检查
       if (!this.newTodo.trim()) {
         alert("todo 不能为空");
         return;

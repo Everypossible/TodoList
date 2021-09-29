@@ -7,7 +7,7 @@
         >.
         <span>{{ item.name }}</span>
       </div>
-        <i class="fa fa-trash" @click.stop="deleteTodoItem(index)"></i>
+        <i class="fa fa-trash cleanItem" @click.stop="deleteTodoItem(index)"></i>
     </li>
   </div>
 </template>
@@ -19,6 +19,7 @@ export default {
   props: ["item", "todoList", "index"],
 
   methods: {
+    //对待办事项完成的参数的变更
     finishTodo(item){
       if(item.isFinish == false){
         item.isFinish = true;
@@ -26,6 +27,8 @@ export default {
         item.isFinish = false;
       }
     },
+    //消息订阅的发布
+    //删除这条待办
     deleteTodoItem(indexTarget) {
       pubsub.publish("deleteTodoItem", indexTarget);
     },
@@ -45,7 +48,7 @@ export default {
 <style scoped>
 .todo-item {
   display: flex;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   align-items: center;
   margin-bottom: 20px;
   padding: 0 10px;
@@ -53,6 +56,12 @@ export default {
   border-radius: 4px;
   background-color: #fff;
   font-size: 14px;
+}
+.todo-content {
+  margin-left: 20px;
+}
+.cleanItem {
+  margin-left: auto;
 }
 .todo-item.finish .todo-content {
   text-decoration: line-through;

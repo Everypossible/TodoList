@@ -4,7 +4,8 @@
     <ul class="todo-list" v-if="todoList.length > 0">
       <TodoItem v-for="item,index in todoList" :key="index" :item="item" :index="index"/>
     </ul>
-    <div v-else class="no-todo-list">no Data</div>
+    <!-- 无待办事项时的提示 -->
+    <div v-else class="no-todo-list">暂时没有待办事项</div>
   </div>
 </template>
 

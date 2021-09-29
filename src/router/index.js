@@ -4,6 +4,7 @@ import ActiveTodoList from '../components/ActiveTodoList'
 import Completed from '../components/CompletedTodoList'
 
 export default new VueRouter({
+    // 路由的对应地址的设置
     routes: [
         {
             path: '/',

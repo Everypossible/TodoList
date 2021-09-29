@@ -15,12 +15,14 @@ export default {
   name: "TodoFooter",
   props: ['todoList'],
   computed: {
+    //计算未完成的待办事项的个数
     finishTodoLength() {
       return this.todoList.filter((item) => !item.isFinish).length;
     },
   },
 
   methods: {
+    //清空已完成的待办事项
     clearCompleted() {
       for(let i = 0; i < this.todoList.length; i++) {
         if(this.todoList[i].isFinish) {

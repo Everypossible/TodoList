@@ -4,7 +4,7 @@
     <ul class="todo-list" v-if="todoList.length > 0">
       <TodoItem v-for="item,index in todoList" :key="index" :item="item" :index="index" v-show="!item.isFinish"/>
     </ul>
-    <div v-else class="no-todo-list">no Data</div>
+    <div v-else class="no-todo-list">No Data</div>
   </div>
 </template>
 

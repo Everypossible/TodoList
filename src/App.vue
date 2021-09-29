@@ -8,6 +8,7 @@
         <TodoHeader v-on:addItem="addItem"/>
 
         <!-- 待办列表 -->
+        <!-- :todoList="todoList" 父组件向子组件传参数 -->
         <router-view :todoList="todoList"></router-view>
         <TodoFooter :todoList="todoList"/>
       </div>
@@ -16,7 +17,9 @@
 </template>
 
 <script>
+// pubsub-js 消息订阅与发布 用于子组件向父组件传参
 import pubsub from 'pubsub-js'
+
 import TodoHeader from "./components/TodoHeader";
 import TodoFooter from "./components/TodoFooter";
 
@@ -36,25 +39,32 @@ export default {
   },
   methods: {
     addItem(todoItem) {
+      //插入数据到数组头
       this.todoList.unshift(todoItem);
     },
     deleteTodoItem(_, index) {
+      //splice：修改数组数据
       this.todoList.splice(index, 1);
     },
   },
 
   mounted() {
+    //消息订阅与发布的订阅
     this.pubId = pubsub.subscribe("deleteTodoItem", this.deleteTodoItem);
   },
 
   beforeDestroy() {
+    //销毁该组件时取消订阅
     pubsub.unsubscribe(this.pubId);
   },
 
   watch: {
     todoList: {
+      //深度监测:可监测数组内容的变化
       deep: true,
+      //就算不写handler，这个function编译完成后也会默认编译成handler
       handler: function (to) {
+        //本地存储
         localStorage.setItem("todoList", JSON.stringify(to));
       },
     },
@@ -73,12 +83,15 @@ body {
   height: 100%;
 }
 body {
-  background: linear-gradient(135deg, #eebd89, #d13abd);
+  /* background: linear-gradient(135deg, #fdfbfb, #e7f0fd); */
+  padding-top: 100px;
+  height: 500px;
+  background-image: linear-gradient(to top, #accbee 0%, #e7f0fd 100%);
 }
 .container {
   /* margin: 100px 0 0 100px; */
   margin: auto;
-  margin-top: 100px;
+  /* margin-top: 100px; */
   width: 500px;
   padding: 0 30px;
   border: 1px solid #eee;
